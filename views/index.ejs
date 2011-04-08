@@ -1,2 +1,15 @@
 <h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
+<form action="/register" method="post">
+  <input type="hidden" name="_method" value="put" />
+  <input type="text" name="todo[name]" value="" /><br/>
+  <textarea name="todo[memo]"></textarea><br/>
+  <input type="submit" value="add" />
+</form>
+
+<dl>
+<h1>TODO List</h1>
+<% for (var i = 0; i < todos.length; i++) { %>
+	<dt><%= todos[i].name %></dt>
+	<dd><%= todos[i].memo %></dd>
+<% } %>
+</dl>
