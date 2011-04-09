@@ -6,14 +6,15 @@ var Schema = mongoose.Schema;
 
 var Todo = new Schema({
   name: {type: String, index: true},
-  status: Number,
+  todo_state: Number,
   memo: String,
   created_at: Date
 });
-//Todo.method('save', function() {
-//  this.created_at = new Date();
-//  this.__super__(fn);
-//});
+Todo.pre('save', function(next) {
+  this.todo_state = 0;
+  this.created_at = new Date();
+  next();
+});
 mongoose.model('Todo', Todo);
 
 //module.exports = Todo;

@@ -31,7 +31,6 @@ app.configure('production', function(){
 
 // Routes
 
-app.use(express.bodyParser());
 app.get('/', function(req, res){
   console.log('requested /.');
   Todo.find({}, function(err, todos) {
@@ -42,10 +41,21 @@ app.get('/', function(req, res){
     });
   });
 });
-app.put('/register', function(req, res) {
+app.post('/register', function(req, res) {
   console.log(req.body.todo);
   var todo = new Todo(req.body.todo);
-  todo.save();
+  todo.save(function(err){console.log(err);});
+  res.redirect('/');
+});
+app.put('/checked/:id', function(req, res) {
+  console.log(req.params.id);
+  Todo.findById(req.params.id, function(err, todo) {
+    console.log(req.body.todo_state);
+    //TODO 実際の値ではなく、オブジェクトが格納されてるっぽい。
+    todo.todo_state = req.body.todo_state;
+    todo.save(function(err){console.log(err);});
+  });
+  var todo = new Todo(req.body.todo);
   res.redirect('/');
 });
 

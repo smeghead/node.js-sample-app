@@ -1,15 +1,35 @@
-<h1><%= title %></h1>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<h1>Todo</h1>
 <form action="/register" method="post">
-  <input type="hidden" name="_method" value="put" />
   <input type="text" name="todo[name]" value="" /><br/>
   <textarea name="todo[memo]"></textarea><br/>
   <input type="submit" value="add" />
 </form>
 
-<dl>
 <h1>TODO List</h1>
+<dl>
 <% for (var i = 0; i < todos.length; i++) { %>
-	<dt><%= todos[i].name %></dt>
-	<dd><%= todos[i].memo %></dd>
+  <dt>
+    <form action="/checked/<%= todos[i]._id %>" method="post" class="check">
+      <input type="hidden" name="_method" value="put">
+      <input type="checkbox" class="todo_state" name="todo_state" value="1" <% if (todos[i].todo_state != 0) { %>checked="checked"<% } %>>
+    </form>
+    <%= todos[i].name %>
+    <%= todos[i].todo_state %>
+  </dt>
+  <dd>
+    <%= todos[i].memo %>
+  </dd>
 <% } %>
 </dl>
+<script type="text/javascript">
+  $('form.check input.todo_state').change(function(){
+    var checkbox = $(this);
+    var form = checkbox.parent();
+    checkbox.val(checkbox.attr('checked') ? 1 : 0);
+    form.submit();
+    
+    //alert(checkbox.attr('checked'));
+  });
+</script>
+<!-- vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: -->
