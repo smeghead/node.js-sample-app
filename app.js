@@ -48,14 +48,13 @@ app.post('/register', function(req, res) {
   res.redirect('/');
 });
 app.put('/checked/:id', function(req, res) {
+  console.log('/checked');
   console.log(req.params.id);
   Todo.findById(req.params.id, function(err, todo) {
-    console.log(req.body.todo_state);
-    //TODO 実際の値ではなく、オブジェクトが格納されてるっぽい。
     todo.todo_state = req.body.todo_state;
     todo.save(function(err){console.log(err);});
+    console.log('saved');
   });
-  var todo = new Todo(req.body.todo);
   res.redirect('/');
 });
 

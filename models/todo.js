@@ -11,8 +11,10 @@ var Todo = new Schema({
   created_at: Date
 });
 Todo.pre('save', function(next) {
-  this.todo_state = 0;
-  this.created_at = new Date();
+  if (this.isNew) {
+    this.todo_state = 0;
+    this.created_at = new Date();
+  }
   next();
 });
 mongoose.model('Todo', Todo);
