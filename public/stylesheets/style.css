@@ -10,4 +10,8 @@ a {
 form.check {
   display: inline;
 }
+.error {
+  color: red;
+  font-weight: bold;
+}
 /* vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8: */

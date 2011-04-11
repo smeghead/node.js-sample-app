@@ -5,9 +5,16 @@ var db = mongoose.connect('mongodb://localhost:27017/todo');
 var Schema = mongoose.Schema;
 
 var Todo = new Schema({
-  name: {type: String, index: true},
+  name: {
+    type: String,
+    index: true,
+    validate: [function(v){return v.length > 0;}, 'name is required.'],
+  },
   todo_state: Number,
-  memo: String,
+  memo: {
+    type: String,
+    validate: [function(v){return v.length > 0;}, 'memo is required.'],
+  },
   created_at: Date
 });
 Todo.pre('save', function(next) {

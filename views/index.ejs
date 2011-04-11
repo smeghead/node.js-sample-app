@@ -1,11 +1,17 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 <h1>Todo</h1>
+<% if (errors) { %>
+  <div class="error">
+    <% for (var i = 0; i < errors.length; i++) { %>
+      <%= errors[i].message %>
+    <% } %>
+  </div>
+<% } %>
 <form action="/register" method="post">
   <input type="text" name="todo[name]" value="" /><br/>
   <textarea name="todo[memo]"></textarea><br/>
   <input type="submit" value="add" />
 </form>
-
 <h1>TODO List</h1>
 <dl>
 <% for (var i = 0; i < todos.length; i++) { %>

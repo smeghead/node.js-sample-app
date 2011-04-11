@@ -38,13 +38,17 @@ app.get('/', function(req, res){
     res.render('index', {
       title: 'Express',
       todos: todos,
+      errors: req.session.errors,
     });
   });
 });
 app.post('/register', function(req, res) {
   console.log(req.body.todo);
   var todo = new Todo(req.body.todo);
-  todo.save(function(err){console.log(err);});
+  todo.save(function(err){
+    console.log(err);
+    req.session.errors = [err];
+  });
   res.redirect('/');
 });
 app.put('/checked/:id', function(req, res) {
