@@ -32,31 +32,31 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-  console.log('requested /.');
   Todo.find({}, function(err, todos) {
-    console.log('finded.');
     res.render('index', {
-      title: 'Express',
+      title: 'TODO',
       todos: todos,
       errors: req.session.errors,
     });
   });
 });
+
 app.post('/register', function(req, res) {
   console.log(req.body.todo);
   var todo = new Todo(req.body.todo);
   todo.save(function(err){
-    console.log(err);
+    if (err) console.log('ERROR:' + err);
     req.session.errors = [err];
   });
   res.redirect('/');
 });
+
 app.put('/checked/:id', function(req, res) {
   console.log('/checked');
   console.log(req.params.id);
   Todo.findById(req.params.id, function(err, todo) {
-    todo.todo_state = req.body.todo_state;
-    todo.save(function(err){console.log(err);});
+    todo.todo_state = req.body.todo_state ? 1 : 0;
+    todo.save(function(err){if (err) console.log('ERROR:' + err);});
     console.log('saved');
   });
   res.redirect('/');

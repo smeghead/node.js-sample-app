@@ -17,6 +17,7 @@ var Todo = new Schema({
   },
   created_at: Date
 });
+
 Todo.pre('save', function(next) {
   if (this.isNew) {
     this.todo_state = 0;
